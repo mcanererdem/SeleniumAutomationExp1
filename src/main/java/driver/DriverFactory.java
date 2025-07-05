@@ -8,8 +8,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 public class DriverFactory {
-    private static ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
+    private static final ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
         if (webDriver.get() == null) {
@@ -20,7 +24,7 @@ public class DriverFactory {
 
     public static WebDriver createDriver() {
         WebDriver driver = null;
-        String browserType = "chrome";
+        String browserType = getBrowserType();
 
 
         switch (browserType) {
@@ -46,7 +50,6 @@ public class DriverFactory {
                 chromeOptions.merge(dc);
 
                 driver = new ChromeDriver(chromeOptions);
-                break;
             }
             case "firefox" -> {
                 System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/src/main/java/driver/drivers/geckodriver.exe");
@@ -56,7 +59,6 @@ public class DriverFactory {
                 firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 
                 driver = new FirefoxDriver(firefoxOptions);
-                break;
             }
         }
         driver.manage().window().maximize();
@@ -66,5 +68,18 @@ public class DriverFactory {
     public static void cleanUpDriver() {
         webDriver.get().quit();
         webDriver.remove();
+    }
+
+    private static String getBrowserType() {
+        String browsertype;
+        try {
+            Properties properties = new Properties();
+            FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/properties/config.properties");
+            properties.load(fileInputStream);
+            browsertype = properties.getProperty("browser", "chrome").toLowerCase().trim();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return browsertype;
     }
 }
