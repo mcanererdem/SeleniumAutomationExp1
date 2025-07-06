@@ -6,42 +6,41 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import pages.BasePage;
 
 import java.time.Duration;
 
-import static driver.DriverFactory.getDriver;
-
-public class Login_Page {
+public class Login_Page extends BasePage {
     private final WebDriver driver = getDriver();
 
     // Validate Successful Login ---------------------------------------------------------------------------------------
     @Given("User is on webdriver university login page")
     public void user_is_on_webdriver_university_login_page() {
-        driver.get("https://webdriveruniversity.com/Login-Portal/index.html");
+        switchToNewTab();
+        navigateToURL("https://webdriveruniversity.com/Login-Portal/index.html");
     }
 
     @When("User enter valid username {word}")
     public void user_enter_valid_username(String username) {
-        WebElement usernameElement = driver.findElement(By.xpath("//input[@id=\"text\"]"));
-        usernameElement.click();
-        usernameElement.sendKeys(username);
+        By usernameElement = By.xpath("//input[@id=\"text\"]");
+        findAndClick(usernameElement);
+        findAndSendText(usernameElement, username);
     }
 
     @When("User enter valid password {word}")
     public void user_enter_valid_password(String password) {
-        WebElement passwordElement = driver.findElement(By.xpath("//input[@id=\"password\"]"));
-        passwordElement.click();
-        passwordElement.sendKeys(password);
+        By passwordElement = By.xpath("//input[@id=\"password\"]");
+        findAndClick(passwordElement);
+        findAndSendText(passwordElement, password);
     }
 
     @When("User click login button")
     public void user_click_login_button() {
-        WebElement loginBtnElement = driver.findElement(By.xpath("//*[@id=\"login-button\"]"));
-        loginBtnElement.click();
+        By loginBtnElement = By.xpath("//*[@id=\"login-button\"]");
+        findAndClick(loginBtnElement);
     }
 
     @Then("User will be represented with successful login message")
@@ -55,9 +54,9 @@ public class Login_Page {
     // Validate Unsuccessful Login - Invalid Username ------------------------------------------------------------------
     @When("User enter invalid username {word}")
     public void user_enter_invalid_username(String username) {
-        WebElement usernameElement = driver.findElement(By.xpath("//input[@id=\"text\"]"));
-        usernameElement.click();
-        usernameElement.sendKeys(username);
+        By usernameElement = By.xpath("//input[@id=\"text\"]");
+        findAndClick(usernameElement);
+        findAndSendText(usernameElement, username);
     }
 
     @Then("User will be represented with unsuccessful login username")
@@ -71,9 +70,9 @@ public class Login_Page {
     // Validate Unsuccessful Login - Invalid Password ------------------------------------------------------------------
     @When("User enter invalid password {word}")
     public void user_enter_invalid_password(String password) {
-        WebElement passwordElement = driver.findElement(By.xpath("//input[@id=\"password\"]"));
-        passwordElement.click();
-        passwordElement.sendKeys(password);
+        By passwordElement = By.xpath("//input[@id=\"password\"]");
+        findAndClick(passwordElement);
+        findAndSendText(passwordElement, password);
     }
 
     @Then("User will be represented with unsuccessful login username password")
@@ -87,16 +86,16 @@ public class Login_Page {
     // Validate Successful/Unsuccessful Login --------------------------------------------------------------------------
     @When("User enter username {word}")
     public void user_enter_username(String username) {
-        WebElement usernameElement = driver.findElement(By.xpath("//input[@id=\"text\"]"));
-        usernameElement.click();
-        usernameElement.sendKeys(username);
+        By usernameElement = By.xpath("//input[@id=\"text\"]");
+        findAndClick(usernameElement);
+        findAndSendText(usernameElement, username);
     }
 
     @When("User enter password {word}")
     public void user_enter_password(String password) {
-        WebElement passwordElement = driver.findElement(By.xpath("//input[@id=\"password\"]"));
-        passwordElement.click();
-        passwordElement.sendKeys(password);
+        By passwordElement = By.xpath("//input[@id=\"password\"]");
+        findAndClick(passwordElement);
+        findAndSendText(passwordElement, password);
     }
 
     @Then("User will be represented with {}")
