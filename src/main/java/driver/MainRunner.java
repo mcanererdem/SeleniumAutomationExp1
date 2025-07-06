@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(
         features = {"classpath:features"},
         glue = {"stepDefinitions"},
-        tags = "@regression",// @contact-us, @login, @regression
+        tags = "@login",// @contact-us, @login, @regression
         monochrome = true, // Format logs to more readable
         dryRun = false, // True => Will not execute mapped step but will execute only unmapped steps
         plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json"})
